@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura de Compra - Tienda de Majo</title>
+    <link rel="icon" href="IMAGENES/logo.02 AM.r觐ᗎ桂耀Ҁ얣翽">
+    <!-- Vinculación de hojas de estilo externas -->
+    <link rel="stylesheet" href="menuypie.css">
+    <link rel="stylesheet" href="factura.css">
+    <style>
+      /* Estilos para integrar el logo en la cabecera de la factura */
+      .brand-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .brand-section .logo-circle {
+        width: 65px;
+        height: 65px;
+        min-width: 65px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(233, 70, 189, 0.2);
+      }
+      .brand-section .logo-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Estilo personalizado para el botón de confirmar compra */
+      .btn-confirm {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+      .btn-confirm:hover {
+        background-color: #218838;
+      }
+      .btn-confirm:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+
+      /* ===================================================
+         ESTILOS DE IMPRESIÓN: Solo imprime la factura
+         =================================================== */
+      @media print {
+        /* Oculta la cabecera del sitio web, pie de página y botones de acción */
+        .tienda-header,
+        .tienda-footer,
+        .actions-bar,
+        br {
+          display: none !important;
+        }
+
+        /* Quita márgenes innecesarios para centrar la factura en la hoja */
+        body {
+          background: #fff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .invoice-container {
+          box-shadow: none !important;
+          border: none !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+      }
+    </style>
+</head>
+<body>
+
+<!-- ENCABEZADO PRINCIPAL DE LA PÁGINA (Se ocultará al imprimir) -->
+<header class="tienda-header">
+  <div class="top-bar">
+    <div class="left-section">
+      <button id="menu-toggle" class="menu-btn">☰</button>
+    
+      <nav id="dropdown-menu" class="main-menu">
+        <ul>
+            <li><a href="blusas.html">Blusas</a></li>
+            <li><a href="vestidos.html">Vestidos</a></li>
+            <li><a href="carteras.html">Carteras</a></li>
+            <li><a href="conjuntos.html">Conjuntos</a></li>
+            <li><a href="accesorios.html">Accesorios</a></li>
+            <li><a href="sandalias.html">Sandalias</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="perfumes.html">Perfumes</a></li>
+            <li><a href="Acercadenosotros.html">Acerca de nosotros</a></li>
+            <li><a href="contactos.html">Contactos</a></li>
+        </ul>
+      </nav>
+
+      <div class="logo-circle">
+        <a href="index.html" class="logo-link">
+          <img src="IMAGENES/logo.02 AM.r觐ᗎ桂耀Ҁ얣翽" alt="M" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        </a>
+      </div>
+      <h1 class="brand-title">Tienda de Majo</h1>
+    </div>
+    
+    <div class="search-container">
+        <img src="IMAGENES/lupa.jpeg" class="search-icon-img" alt="Lupa">
+        <input type="text" class="search-input" id="search-input" list="productos-sugeridos" placeholder="Buscar productos...">
+        
+        <datalist id="productos-sugeridos">
+          <option value="Blusas de temporada"></option>
+          <option value="Vestidos elegantes"></option>
+          <option value="Carteras Coach"></option>
+          <option value="Conjuntos elegantes"></option>
+          <option value="Accesorios y Joyería"></option>
+          <option value="Sandalias y zapatillas"></option>
+          <option value="Skincare facial"></option>
+          <option value="Perfumes de marcas originales"></option>
+        </datalist>
+    </div>
+
+    <div class="cart-container" id="cart-trigger" style="cursor: pointer;">
+      <svg class="cart-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 3h3.5l2.5 11h11l2-8H6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="8.5" cy="19.5" r="1.5" fill="currentColor"/>
+        <circle cx="17.5" cy="19.5" r="1.5" fill="currentColor"/>
+      </svg>
+      <span class="cart-badge" id="cart-count">0</span>
+    </div>
+  </div>
+
+  <nav class="categories-nav">
+    <a href="blusas.html" class="nav-item">Blusas</a>
+    <a href="vestidos.html" class="nav-item">Vestidos</a>
+    <a href="carteras.html" class="nav-item">Carteras</a>
+    <a href="conjuntos.html" class="nav-item">Conjuntos</a>
+    <a href="accesorios.html" class="nav-item">Accesorios</a>
+    <a href="sandalias.html" class="nav-item">Sandalias</a>
+    <a href="skincare.html" class="nav-item">Skincare</a>
+    <a href="perfumes.html" class="nav-item">Perfumes</a>
+    <a href="Acercadenosotros.html" class="nav-item">Acerca de nosotros</a>
+    <a href="contactos.html" class="nav-item">Contactos</a>
+  </nav>
+</header>
+
+<br><br>
+
+<!-- CONTENIDO DE LA FACTURA (Único que se imprimirá) -->
+<div class="invoice-container">
+    <!-- Encabezado de la Factura -->
+    <header class="invoice-header">
+        <div class="brand-section">
+            <div class="logo-circle">
+                <a href="index.html" class="logo-link">
+                    <img src="IMAGENES/logo.02 AM.r觐ᗎ桂耀Ҁ얣翽" alt="M">
+                </a>
+            </div>
+            <div>
+                <h1>Tienda de Majo</h1>
+                <p>Accesorios, Moda y Más</p>
+                <p>Honduras</p>
+            </div>
+        </div>
+        <div class="invoice-details">
+            <h2>Factura</h2>
+            <p><strong>N°:</strong> <span id="invoice-number">N° 01</span></p>
+            <p><strong>Fecha:</strong> <span id="invoice-date">--/--/----</span></p>
+        </div>
+    </header>
+
+    <!-- Información del Cliente -->
+    <section class="customer-info">
+        <p style="margin: 0; color: #666; font-size: 14px;">Gracias por realizar tu compra en <strong>Tienda de Majo</strong>. A continuación verás el resumen de los artículos seleccionados:</p>
+    </section>
+
+    <!-- Tabla de Productos -->
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>Ítem</th>
+                <th>Descripción</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="invoice-items">
+            <!-- Se llena dinámicamente -->
+        </tbody>
+    </table>
+
+    <!-- Resumen de Costos -->
+    <div class="summary-container">
+        <table class="summary-table">
+            <tr>
+                <td>Subtotal:</td>
+                <td id="invoice-subtotal">L. 0.00</td>
+            </tr>
+            <tr>
+                <td>Envío:</td>
+                <td>Por acordar</td>
+            </tr>
+            <tr class="total-row">
+                <td>Total A Pagar:</td>
+                <td id="invoice-total">L. 0.00</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Botones de Acción (Se ocultarán al imprimir) -->
+    <div class="actions-bar">
+        <a href="index.html" class="btn btn-back">← Volver a la Tienda</a>
+        <button id="btnConfirmarCompra" class="btn btn-confirm" onclick="confirmarCompraBD()">Confirmar Compra</button>
+        <button onclick="window.print()" class="btn btn-print">Imprimir / Guardar PDF</button>
+    </div>
+</div>
+
+<br><br>
+
+<!-- PIE DE PÁGINA DE LA PÁGINA (Se ocultará al imprimir) -->
+<footer class="tienda-footer">
+  <div class="footer-top">
+    <a href="Acercadenosotros.html" class="footer-link">Acerca de nosotros</a>
+    <a href="contactos.html" class="footer-link">Contactos</a>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="social-icons">
+      <a href="https://wa.me/50487971474" target="_blank" class="icon-link">
+        <img src="IMAGENES/WhatsApp.webp" style="width:35px; height:35px; vertical-align:middle;" alt="WhatsApp">
+      </a>
+      <a href="https://www.instagram.com/latiendademajo14?igsh=MWt2a2Q3Y3c4NGV2Zg==" class="icon-link">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" style="width: 35px; height: 35px; vertical-align: middle;" alt="Instagram">
+      </a>
+      <a href="https://www.facebook.com/share/1EgkGR1aCU/?mibextid=wwXIfr" class="icon-link">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/2023_Facebook_icon.svg" style="width: 35px; height: 35px; vertical-align: middle;" alt="Facebook">
+      </a>
+      <a href="https://www.tiktok.com/@tucaritabeauty?_r=1&_t=ZS-970Hpd6eXXJ" class="icon-link">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Ionicons_logo-tiktok.svg" style="width: 35px; height: 35px; vertical-align: middle;" alt="TikTok">
+      </a>
+    </div>
+
+    <div id="sfc3zgpp9x1rb5kwdmun4ct1p9zbuz5g1hp"></div>
+    <script type="text/javascript" src="https://counter11.optistats.ovh/private/counter.js?c=3zgpp9x1rb5kwdmun4ct1p9zbuz5g1hp&down=async" async></script>
+
+    <footer class="footer-container">
+      <p class="footer-text">@2026Tiendademajo | Desarrollado por Kimberly Ramos y Karol Elias</p>
+      <div class="logo-circle">
+          <img src="IMAGENES/k-k.jpeg" alt="KK Logo">
+      </div>
+    </footer>
+
+    <!-- Ubicación (Derecha) -->
+    <div class="location-container">
+     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254.55835954624652!2d-87.59782039016432!3d15.321806086188012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f661f0005996849%3A0xc673e646bc62950a!2sLa%20Tienda%20de%20Majo!5e1!3m2!1ses-419!2shn!4v1780809339253!5m2!1ses-419!2shn" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Menú desplegable
+        const menuToggle = document.getElementById('menu-toggle');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        if (menuToggle && dropdownMenu) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                dropdownMenu.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!menuToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // Búsqueda
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) {
+            searchInput.addEventListener("change", function() {
+                if (this.value === "Blusas de temporada") window.location.href = "blusas.html";
+                else if (this.value === "Vestidos elegantes") window.location.href = "vestidos.html";
+                else if (this.value === "Carteras Coach") window.location.href = "carteras.html";
+                else if (this.value === "Conjuntos elegantes") window.location.href = "conjuntos.html";
+                else if (this.value === "Accesorios y Joyería") window.location.href = "accesorios.html";
+                else if (this.value === "Sandalias y zapatillas") window.location.href = "sandalias.html";
+                else if (this.value === "Skincare facial") window.location.href = "skincare.html";
+                else if (this.value === "Perfumes de marcas originales") window.location.href = "perfumes.html";
+            });
+        }
+
+        // --- MANEJO DEL NÚMERO DE FACTURA SECUENCIAL ---
+        let ultimoNumero = parseInt(localStorage.getItem('ultimoNumeroFactura')) || 0;
+        let nuevoNumero = ultimoNumero + 1;
+
+        // Guarda el número incrementado en el navegador
+        localStorage.setItem('ultimoNumeroFactura', nuevoNumero);
+
+        // Agrega el 0 inicial si es menor a 10 (ej: 01, 02... 09, 10)
+        let numeroFormateado = nuevoNumero < 10 ? '0' + nuevoNumero : nuevoNumero;
+        document.getElementById('invoice-number').textContent = 'N° ' + numeroFormateado;
+        
+        // Fecha actual
+        const hoy = new Date();
+        const fechaFormateada = hoy.toLocaleDateString('es-HN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        document.getElementById('invoice-date').textContent = fechaFormateada;
+
+        // --- CARGAR PRODUCTOS DESDE LOCALSTORAGE ---
+        const datosFactura = localStorage.getItem('facturaCliente') || localStorage.getItem('carritoCompras');
+        const itemsContainer = document.getElementById('invoice-items');
+        const subtotalEl = document.getElementById('invoice-subtotal');
+        const totalEl = document.getElementById('invoice-total');
+
+        if (datosFactura) {
+            const productos = JSON.parse(datosFactura);
+
+            if (productos.length === 0) {
+                itemsContainer.innerHTML = '<tr><td colspan="3" style="text-align:center;">No hay productos en la factura.</td></tr>';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            productos.forEach((prod, index) => {
+                const precio = parseFloat(prod.price) || 0;
+                total += precio;
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${prod.name}</strong></td>
+                        <td>L. ${precio.toLocaleString('es-HN', { minimumFractionDigits: 2 })}</td>
+                    </tr>
+                `;
+            });
+
+            itemsContainer.innerHTML = html;
+            subtotalEl.textContent = `L. ${total.toLocaleString('es-HN', { minimumFractionDigits: 2 })}`;
+            totalEl.textContent = `L. ${total.toLocaleString('es-HN', { minimumFractionDigits: 2 })}`;
+        } else {
+            itemsContainer.innerHTML = '<tr><td colspan="3" style="text-align:center;">No se encontró información de la compra.</td></tr>';
+        }
+    });
+
+    // --- FUNCIÓN PARA CONECTAR EL BOTÓN A TU BACKEND EN PHP ---
+    async function confirmarCompraBD() {
+        const btn = document.getElementById('btnConfirmarCompra');
+        const datosFactura = localStorage.getItem('facturaCliente') || localStorage.getItem('carritoCompras');
+
+        if (!datosFactura) {
+            alert('No hay productos en la factura para procesar.');
+            return;
+        }
+
+        const productos = JSON.parse(datosFactura);
+
+        // Preparamos los datos enviando Nombre y Cantidad del producto al backend de PHP
+        const pedido = productos.map(item => ({
+            id: item.id || null,
+            nombre: item.name || item.nombre,
+            cantidad: item.cantidad || 1
+        }));
+
+        try {
+            btn.disabled = true;
+            btn.textContent = "Procesando...";
+
+            // Petición al archivo PHP que procesa la actualización en SQL Server
+            const respuesta = await fetch('restar_stock.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pedido)
+            });
+
+            const resultado = await respuesta.json();
+
+            if (respuesta.ok && resultado.exito) {
+                alert('¡Compra confirmada! El stock ha sido descontado de la base de datos SQL Server.');
+                btn.textContent = "Compra Registrada";
+                btn.style.backgroundColor = "#6c757d";
+                
+                // Limpia el carrito en el navegador tras completar la venta
+                localStorage.removeItem('carritoCompras');
+            } else {
+                alert('Error al descontar stock: ' + (resultado.mensaje || 'Respuesta no válida del servidor.'));
+                btn.disabled = false;
+                btn.textContent = "Confirmar Compra";
+            }
+        } catch (error) {
+            console.error('Error al conectar con PHP:', error);
+            alert('No se pudo conectar con el archivo PHP. Asegúrate de ejecutar el sitio desde XAMPP/WampServer (http://localhost/...).');
+            btn.disabled = false;
+            btn.textContent = "Confirmar Compra";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+p {
+    text-align: center;
+    font-size: 18px; /* Un tamaño ideal para párrafos destacados */
+}
+
+
+
+.seccion-historia {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente todo el bloque en la pantalla */
+    align-items: center;     /* Centra verticalmente el texto con la imagen */
+    gap: 40px;               /* Añade un espacio de separación entre el texto y la foto */
+    max-width: 1000px;       /* Evita que el contenido se estire demasiado en pantallas grandes */
+    margin: 0 auto;          /* Asegura el centrado total del contenedor principal */
+    padding: 20px;
+}
+
+.contenido-texto {
+    max-width: 500px;        /* Controla el ancho del texto para que no se desparrame */
+    text-align: left;        /* Hace que el texto se lea de forma natural (alineado a la izquierda) */
+}
+
+.seccion-historia img {
+    max-width: 350px;        /* Ajusta el tamaño de la imagen a tu gusto */
+    height: auto;
+    border-radius: 8px;      /* Opcional: le da un toque moderno con bordes suaves */
+}
+
+    /* Estilos para el contador flotante sobre el carrito */
+      .cart-container {
+        position: relative;
+      }
+      .cart-badge {
+        position: absolute;
+        top: -5px;
+        right: -8px;
+        background-color: #e946bd;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 50%;
+        padding: 2px 6px;
+        min-width: 15px;
+        text-align: center;
+      }
